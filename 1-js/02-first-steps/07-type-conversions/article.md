@@ -1,150 +1,150 @@
-# Type Conversions
+# Tyyppimuunnokset
 
-Most of the time, operators and functions automatically convert the values given to them to the right type.
+Useimmiten operaattorit ja funktiot muuntavat niille annetut arvot automaattisesti oikeaan tyyppiin.
 
-For example, `alert` automatically converts any value to a string to show it. Mathematical operations convert values to numbers.
+Esimerkiksi `alert` muuntaa minkä tahansa arvon automaattisesti merkkijonoksi näyttääkseen sen. Matemaattiset operaatiot muuntavat arvot luvuiksi.
 
-There are also cases when we need to explicitly convert a value to the expected type.
+On myös tilanteita, joissa arvo täytyy muuntaa odotettuun tyyppiin erikseen.
 
-```smart header="Not talking about objects yet"
-In this chapter, we won't cover objects. For now, we'll just be talking about primitives.
+```smart header="Olioista ei vielä puhuta"
+Tässä kappaleessa emme käsittele olioita. Toistaiseksi puhumme vain primitiiveistä.
 
-Later, after we learn about objects, in the chapter <info:object-toprimitive> we'll see how objects fit in.
+Myöhemmin, kun olemme oppineet olioista, näemme kappaleessa <info:object-toprimitive>, miten oliot sopivat kuvioon.
 ```
 
-## String Conversion
+## Merkkijonomuunnos
 
-String conversion happens when we need the string form of a value.
+Merkkijonomuunnos tapahtuu, kun tarvitsemme arvon merkkijonomuodossa.
 
-For example, `alert(value)` does it to show the value.
+Esimerkiksi `alert(value)` tekee sen näyttääkseen arvon.
 
-We can also call the `String(value)` function to convert a value to a string:
+Voimme myös kutsua funktiota `String(value)` muuntaaksemme arvon merkkijonoksi:
 
 ```js run
 let value = true;
 alert(typeof value); // boolean
 
 *!*
-value = String(value); // now value is a string "true"
+value = String(value); // nyt value on merkkijono "true"
 alert(typeof value); // string
 */!*
 ```
 
-String conversion is mostly obvious. A `false` becomes `"false"`, `null` becomes `"null"`, etc.
+Merkkijonomuunnos on useimmiten itsestään selvä. Arvosta `false` tulee `"false"`, arvosta `null` tulee `"null"` jne.
 
-## Numeric Conversion
+## Lukumuunnos
 
-Numeric conversion in mathematical functions and expressions happens automatically.
+Lukumuunnos tapahtuu matemaattisissa funktioissa ja lausekkeissa automaattisesti.
 
-For example, when division `/` is applied to non-numbers:
+Esimerkiksi kun jakolaskua `/` käytetään muihin kuin lukuihin:
 
 ```js run
-alert( "6" / "2" ); // 3, strings are converted to numbers
+alert( "6" / "2" ); // 3, merkkijonot muunnetaan luvuiksi
 ```
 
-We can use the `Number(value)` function to explicitly convert a `value` to a number:
+Funktiolla `Number(value)` voimme muuntaa arvon `value` luvuksi erikseen:
 
 ```js run
 let str = "123";
 alert(typeof str); // string
 
-let num = Number(str); // becomes a number 123
+let num = Number(str); // muuttuu luvuksi 123
 
 alert(typeof num); // number
 ```
 
-Explicit conversion is usually required when we read a value from a string-based source like a text form but expect a number to be entered.
+Erillistä muunnosta tarvitaan yleensä, kun luemme arvon merkkijonopohjaisesta lähteestä, kuten tekstilomakkeesta, mutta odotamme, että siihen syötetään luku.
 
-If the string is not a valid number, the result of such a conversion is `NaN`. For instance:
+Jos merkkijono ei ole kelvollinen luku, muunnoksen tulos on `NaN`. Esimerkiksi:
 
 ```js run
-let age = Number("an arbitrary string instead of a number");
+let age = Number("mielivaltainen merkkijono luvun sijaan");
 
-alert(age); // NaN, conversion failed
+alert(age); // NaN, muunnos epäonnistui
 ```
 
-Numeric conversion rules:
+Lukumuunnoksen säännöt:
 
-| Value |  Becomes... |
+| Arvo |  Muuttuu... |
 |-------|-------------|
 |`undefined`|`NaN`|
 |`null`|`0`|
-|<code>true&nbsp;and&nbsp;false</code> | `1` and `0` |
-| `string` | Whitespaces (includes spaces, tabs `\t`, newlines `\n` etc.) from the start and end are removed. If the remaining string is empty, the result is `0`. Otherwise, the number is "read" from the string. An error gives `NaN`. |
+|<code>true&nbsp;ja&nbsp;false</code> | `1` ja `0` |
+| `string` | Tyhjämerkit (välilyönnit, sarkaimet `\t`, rivinvaihdot `\n` jne.) poistetaan alusta ja lopusta. Jos jäljelle jäävä merkkijono on tyhjä, tulos on `0`. Muuten luku "luetaan" merkkijonosta. Virhe antaa tulokseksi `NaN`. |
 
-Examples:
+Esimerkkejä:
 
 ```js run
 alert( Number("   123   ") ); // 123
-alert( Number("123z") );      // NaN (error reading a number at "z")
+alert( Number("123z") );      // NaN (virhe luettaessa lukua kohdassa "z")
 alert( Number(true) );        // 1
 alert( Number(false) );       // 0
 ```
 
-Please note that `null` and `undefined` behave differently here: `null` becomes zero while `undefined` becomes `NaN`.
+Huomaa, että `null` ja `undefined` käyttäytyvät tässä eri tavoin: `null` muuttuu nollaksi, kun taas `undefined` muuttuu arvoksi `NaN`.
 
-Most mathematical operators also perform such conversion, we'll see that in the next chapter.
+Useimmat matemaattiset operaattorit tekevät myös tällaisen muunnoksen. Näemme sen seuraavassa kappaleessa.
 
-## Boolean Conversion
+## Totuusarvomuunnos
 
-Boolean conversion is the simplest one.
+Totuusarvomuunnos on muunnoksista yksinkertaisin.
 
-It happens in logical operations (later we'll meet condition tests and other similar things) but can also be performed explicitly with a call to `Boolean(value)`.
+Se tapahtuu loogisissa operaatioissa (myöhemmin tutustumme ehtotesteihin ja muihin vastaaviin asioihin), mutta sen voi tehdä myös erikseen kutsumalla `Boolean(value)`.
 
-The conversion rule:
+Muunnossääntö:
 
-- Values that are intuitively "empty", like `0`, an empty string, `null`, `undefined`, and `NaN`, become `false`.
-- Other values become `true`.
+- Arvot, jotka ovat intuitiivisesti "tyhjiä", kuten `0`, tyhjä merkkijono, `null`, `undefined` ja `NaN`, muuttuvat arvoksi `false`.
+- Muut arvot muuttuvat arvoksi `true`.
 
-For instance:
+Esimerkiksi:
 
 ```js run
 alert( Boolean(1) ); // true
 alert( Boolean(0) ); // false
 
-alert( Boolean("hello") ); // true
+alert( Boolean("hei") ); // true
 alert( Boolean("") ); // false
 ```
 
-````warn header="Please note: the string with zero `\"0\"` is `true`"
-Some languages (namely PHP) treat `"0"` as `false`. But in JavaScript, a non-empty string is always `true`.
+````warn header="Huomaa: merkkijono, jossa on nolla `\"0\"`, on `true`"
+Jotkin kielet (nimittäin PHP) käsittelevät merkkijonoa `"0"` arvona `false`. JavaScriptissa ei-tyhjä merkkijono on kuitenkin aina `true`.
 
 ```js run
 alert( Boolean("0") ); // true
-alert( Boolean(" ") ); // spaces, also true (any non-empty string is true)
+alert( Boolean(" ") ); // välilyöntejä, myös true (mikä tahansa ei-tyhjä merkkijono on true)
 ```
 ````
 
-## Summary
+## Yhteenveto
 
-The three most widely used type conversions are to string, to number, and to boolean.
+Kolme yleisimmin käytettyä tyyppimuunnosta ovat muunnokset merkkijonoksi, luvuksi ja totuusarvoksi.
 
-**`String Conversion`** -- Occurs when we output something. Can be performed with `String(value)`. The conversion to string is usually obvious for primitive values.
+**`Merkkijonomuunnos`** -- Tapahtuu, kun tulostamme jotain. Voidaan tehdä funktiolla `String(value)`. Primitiivisten arvojen muunnos merkkijonoksi on yleensä itsestään selvä.
 
-**`Numeric Conversion`** -- Occurs in math operations. Can be performed with `Number(value)`.
+**`Lukumuunnos`** -- Tapahtuu matemaattisissa operaatioissa. Voidaan tehdä funktiolla `Number(value)`.
 
-The conversion follows the rules:
+Muunnos noudattaa sääntöjä:
 
-| Value |  Becomes... |
+| Arvo |  Muuttuu... |
 |-------|-------------|
 |`undefined`|`NaN`|
 |`null`|`0`|
 |<code>true&nbsp;/&nbsp;false</code> | `1 / 0` |
-| `string` | The string is read "as is", whitespaces (includes spaces, tabs `\t`, newlines `\n` etc.) from both sides are ignored. An empty string becomes `0`. An error gives `NaN`. |
+| `string` | Merkkijono luetaan "sellaisenaan", ja tyhjämerkit (välilyönnit, sarkaimet `\t`, rivinvaihdot `\n` jne.) molemmista päistä jätetään huomiotta. Tyhjästä merkkijonosta tulee `0`. Virhe antaa tulokseksi `NaN`. |
 
-**`Boolean Conversion`** -- Occurs in logical operations. Can be performed with `Boolean(value)`.
+**`Totuusarvomuunnos`** -- Tapahtuu loogisissa operaatioissa. Voidaan tehdä funktiolla `Boolean(value)`.
 
-Follows the rules:
+Noudattaa sääntöjä:
 
-| Value |  Becomes... |
+| Arvo |  Muuttuu... |
 |-------|-------------|
 |`0`, `null`, `undefined`, `NaN`, `""` |`false`|
-|any other value| `true` |
+|mikä tahansa muu arvo| `true` |
 
 
-Most of these rules are easy to understand and memorize. The notable exceptions where people usually make mistakes are:
+Useimmat näistä säännöistä on helppo ymmärtää ja muistaa. Merkittävät poikkeukset, joissa ihmiset yleensä tekevät virheitä, ovat:
 
-- `undefined` is `NaN` as a number, not `0`.
-- `"0"` and space-only strings like `"   "` are true as a boolean.
+- `undefined` on lukuna `NaN`, ei `0`.
+- `"0"` ja pelkistä välilyönneistä koostuvat merkkijonot, kuten `"   "`, ovat totuusarvona tosia.
 
-Objects aren't covered here. We'll return to them later in the chapter <info:object-toprimitive> that is devoted exclusively to objects after we learn more basic things about JavaScript.
+Olioita ei käsitellä tässä. Palaamme niihin myöhemmin kappaleessa <info:object-toprimitive>, joka on omistettu kokonaan olioille, kun olemme oppineet lisää JavaScriptin perusasioita.
